@@ -39,7 +39,7 @@ public class M0608 extends AppCompatActivity {
         nf = new DecimalFormat("0.0000");
         //-----巨集執行----
         for (int i = 0; i < 18; i++) {
-            String idName = "m0608_b0" + String.format("%02d", i);
+            String idName = "m0608_b" + String.format("%03d", i);
             int resID = getResources().getIdentifier(idName, "id", getPackageName());
 
             Button btn = ((Button) findViewById(resID));
@@ -49,6 +49,7 @@ public class M0608 extends AppCompatActivity {
             if (i == 16) btn.setOnClickListener(delOnClick);
             if (i == 17) btn.setOnClickListener(clearOnClick);
         }
+
         num1.setText("");
         show.setText("");
     }
