@@ -1,7 +1,5 @@
 package tw.tcnr12.m0609;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -14,12 +12,15 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Menu01 extends AppCompatActivity {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class Menu03 extends AppCompatActivity {
 
     private Intent intent01 = new Intent();
     private LinearLayout mlay02;
     private TextView myname;
     private TextView tv;
+    private String mode_title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +65,14 @@ public class Menu01 extends AppCompatActivity {
         TextView objt001 = (TextView) findViewById(R.id.objT001); // 取出參考物件
         objt001.setVisibility(View.GONE); // 設定參考物件隱藏不佔空間
         // ----
+        // 設定class標題
+        Intent intent01 = this.getIntent();
+        mode_title = intent01.getStringExtra("subname");
+        this.setTitle(this.getResources().getIdentifier(mode_title, "string", getPackageName()));
+
+
         try {
-            for (int i=5;i<=20;i++){  // 設定走20圈, 遇到沒資料自動停止.
+            for (int i=1;i<=20;i++){  // 設定走20圈, 遇到沒資料自動停止.
                     tv = new TextView(this); // tv 繼承TextView
                     tv.setId(i); // 寫入配置碼ID 代號
                     // %02d執行十進制整數轉換d，格式化補零，寬度為2。 因此，一個int參數，它的值是7
@@ -73,7 +80,7 @@ public class Menu01 extends AppCompatActivity {
                     String microNo = String.format("%02d", i);
 //                Log.d(TAG,             microNo                );
                     // 取得string 裏頭相對應的ID 碼
-                    int id = getResources().getIdentifier("m" + microNo, "string", getPackageName());
+                    int id = getResources().getIdentifier(mode_title + microNo, "string", getPackageName());
                     // --------------------------------------------
                     if (id == 0) {
                         break; // 假如 getIdentifier 找不到滿足資料, 會傳回 0 , 所以中斷迴圈
@@ -99,34 +106,33 @@ public class Menu01 extends AppCompatActivity {
     }
 
 
-    private View.OnClickListener clkOn =new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            int ii = (v.getId()); // 下層巨集前兩碼
-            String mm = String.format("%02d", ii);
-            String subname = "m" + mm;
+    private View.OnClickListener clkOn = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int ii = (v.getId()); // 下層巨集前兩碼
+                    String mm = String.format("%02d", ii);
+                    String subname = "m" + mm;
 
-            // ------------------------------------------
+                    // ------------------------------------------
 //            Log.d(TAG, "subname:"+subname);
 //            intent01.putExtra("sel", ii);
-            intent01.putExtra("subname", subname); // subname => m05,m06,m07....m17
-            intent01.setClass(Menu01.this, Menu02.class);
-            startActivity(intent01);
-        }
+//                    intent01.putExtra("subname", subname); // subname => m05,m06,m07....m17
+//                    intent01.setClass(Menu02.this, Menu03.class);
+                    startActivity(intent01);
+                }
     };
+
+
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.m0609, menu);
         return true;
     }
 //
-
-    @Override
-    public void onBackPressed() {
+public void onBackPressed() {
 //        super.onBackPressed();
-        Toast.makeText(getApplication(),"禁用返回鍵",Toast.LENGTH_SHORT).show();
-    }
-
+    Toast.makeText(getApplication(),"禁用返回鍵",Toast.LENGTH_SHORT).show();
+}
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
